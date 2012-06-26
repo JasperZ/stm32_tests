@@ -29,10 +29,6 @@ int16_t getAchseAcc(uint8_t pos)
 {
 	int16_t out;
 
-//	achse[2].low = 0x9a;
-//	achse[2].high = 0xfe;
-
-
 	out = ((int16_t)(achse[pos].high<<8 | achse[pos].low))>>4;
 
 	out += achse[pos].offset;
