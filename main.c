@@ -120,7 +120,7 @@ void parseInput(void)
 
 int main(void)
 {
-	uint8_t buffer[20];
+	uint8_t buffer[16];
 
 	initClock();
 	initTimer1();
