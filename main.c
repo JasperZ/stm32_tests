@@ -132,8 +132,6 @@ int main(void)
 	GPIOA->CRL |= GPIO_CRL_MODE3_1 | GPIO_CRL_MODE3_0;
 	GPIOA->CRL &= ~GPIO_CRL_CNF3_0;
 
-//	SCB->SCR |= SCB_SCR_SLEEPONEXIT;
-
 	while(1)
 	{
 		if(test > cmp)
@@ -165,8 +163,6 @@ int main(void)
 		}
 
 		parseInput();
-
-//		__WFI();
 	}
 
 	return 0;
