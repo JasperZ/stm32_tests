@@ -5,6 +5,7 @@
 #define Y_ACHSE (uint8_t)1
 #define Z_ACHSE (uint8_t)2
 
+//Raw data struct
 typedef struct
 {
 	uint8_t high;

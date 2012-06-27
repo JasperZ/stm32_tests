@@ -15,13 +15,20 @@ void initAcc(void)
 void updateAcc(void)
 {
 	uint8_t addr = 0x28;
+	uint8_t tmp;
 
-	for(uint8_t i=0; i<3; i++)
+	tmp = readSpi(0x27);
+
+	//update data if there are new
+	if((tmp & 0x08) != 0)
 	{
-		achse[i].low = readSpi(addr);
-		addr++;
-		achse[i].high = readSpi(addr);
-		addr++;
+		for(uint8_t i=0; i<3; i++)
+		{
+			achse[i].low = readSpi(addr);
+			addr++;
+			achse[i].high = readSpi(addr);
+			addr++;
+		}
 	}
 }
 
@@ -36,6 +43,7 @@ int16_t getAchseAcc(uint8_t pos)
 	return out;
 }
 
+//no real calibration only set the actual position as default
 void calibrateAcc(void)
 {
 	int16_t tmp;
@@ -56,6 +64,7 @@ void calibrateAcc(void)
 	achse[Z_ACHSE].offset = (tmp - 341) * (-1);
 }
 
+//returns the offset of the given axis
 int16_t getOffset(uint8_t pos)
 {
 	return achse[pos].offset;

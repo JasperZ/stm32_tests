@@ -5,6 +5,7 @@ volatile Buffer_TypeDef inputBuffer;
 
 void initUsart(void)
 {
+	//reset buffers
 	outputBuffer.readPtr = outputBuffer.buffer;
 	outputBuffer.writePtr = outputBuffer.buffer;
 	outputBuffer.records = 0;
@@ -13,28 +14,32 @@ void initUsart(void)
 	inputBuffer.writePtr = inputBuffer.buffer;
 	inputBuffer.records = 0;
 
+	//enable Clocks
 	RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
 
+	//setup pina.9 for tx
 	GPIOA->CRH |= GPIO_CRH_MODE9_0 | GPIO_CRH_MODE9_1 | GPIO_CRH_CNF9_1;
 	GPIOA->CRH &= ~GPIO_CRH_CNF9_0;
 
+	//setup pina.10 for rx
 	GPIOA->CRH &= ~(GPIO_CRH_MODE10_0 | GPIO_CRH_MODE10_1 | GPIO_CRH_CNF10_0);
 	GPIOA->CRH |= GPIO_CRH_CNF10_1;
 
+	//reset usart1 registers
 	USART1->CR1 = 0;
 	USART1->CR2 = 0;
 	USART1->CR3 = 0;
 
-	GPIOA->CRH |= GPIO_CRH_CNF9_1 | GPIO_CRH_MODE9_1 | GPIO_CRH_MODE9_0;
-	GPIOA->CRH |= GPIO_CRH_CNF10_0;
-
 	//Baud 256000
 	USART1->BRR = (uint32_t)188;
-	//enable
+	//enable transmitter and receiver, also receiver interrupt
 	USART1->CR1 |= USART_CR1_TE | USART_CR1_RE | USART_CR1_RXNEIE;
 
+	//enable interrupt for Usart1
 	NVIC_EnableIRQ(USART1_IRQn);
+
+	//enable Usart1
 	USART1->CR1 |= USART_CR1_UE;
 }
 
