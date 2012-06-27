@@ -137,18 +137,10 @@ int main(void)
 		if(test > cmp)
 		{
 			updateAcc();
-/*
-			sprintf(buffer, "X-Achse: %i Offset: %i", data1[0][X_ACHSE], getOffset(X_ACHSE));
-			writeStringUsart(buffer);
-			sprintf(buffer, "Y-Achse: %i Offset: %i", data1[0][Y_ACHSE], getOffset(Y_ACHSE));
-			writeStringUsart(buffer);
-			sprintf(buffer, "Z-Achse: %i Offset: %i", data1[0][Z_ACHSE], getOffset(Z_ACHSE));
-			writeStringUsart(buffer);
-			writeCharUsart('\r');
-*//**/
+
 			sprintf(buffer, "%i:%i:%i", getAchseAcc(X_ACHSE), getAchseAcc(Y_ACHSE), getAchseAcc(Z_ACHSE));
 			writeStringUsart(buffer);
-/**/
+
 			//LED Blinken
 			if((GPIOA->ODR & GPIO_ODR_ODR3) != 0)
 			{
